@@ -48,7 +48,5 @@ function topksort(&$array, $k = 0) {
     $swap($array, $i, 0);
     $topkheapifydown($array, $i);
   }
-  while(count($array) > $k) {
-    array_pop($array);
-  }
+  array_splice($array, $k);
 }
