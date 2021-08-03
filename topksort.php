@@ -1,22 +1,27 @@
 <?php
 
-function topksort(&$array, $k = 0) {
+function topksort(&$array, $k = 0, $comparator = null) {
+  if(is_null($comparator)) {
+    $comparator = function ($a, $b) {
+      return $a <=> $b;
+    };
+  }
   $swap = function (&$array, $i, $j) {
     $tmp = $array[$i];
     $array[$i] = $array[$j];
     $array[$j] = $tmp;
   };
-  $topkheapifydown = function (&$array, $k) use ($swap) {
+  $topkheapifydown = function (&$array, $k) use ($swap, $comparator) {
     $i = 0;
     do {
       $done = true;
       $maxIdx = $i;
       if(2*($i+1)-1 < $k) {
-        if($array[2*($i+1)-1] > $array[$maxIdx]) {
+        if($comparator($array[2*($i+1)-1], $array[$maxIdx]) > 0) {
           $maxIdx = 2*($i+1)-1;
         }
         if(2*($i+1) < $k) {
-          if($array[2*($i+1)] > $array[$maxIdx]) {
+          if($comparator($array[2*($i+1)], $array[$maxIdx]) > 0) {
             $maxIdx = 2*($i+1);
           }
         }
@@ -33,13 +38,13 @@ function topksort(&$array, $k = 0) {
   }
   for($i = 1; $i < $k; ++$i) {
     $j = $i;
-    while($j > 0 && $array[$j] > $array[intdiv($j, 2)]) {
+    while($j > 0 && $comparator($array[$j], $array[intdiv($j, 2)]) > 0) {
       $swap($array, $j, intdiv($j, 2));
       $j = intdiv($j, 2);
     }
   }
   for($i = $k; $i < count($array); ++$i) {
-    if($array[$i] < $array[0]) {
+    if($comparator($array[0], $array[$i]) > 0) {
       $swap($array, $i, 0);
       $topkheapifydown($array, $k);
     }
