@@ -18,7 +18,7 @@ echo 'Time taken with topksort: '.$timeTaken.'s'.PHP_EOL;
 
 $start = microtime(true);
 sort($array2);
-$array2 = array_slice($array2, 0, 10000);
+array_splice($array2, 10000);
 $timeTaken = microtime(true) - $start;
 
 echo 'Time taken normally: '.$timeTaken.'s'.PHP_EOL;
