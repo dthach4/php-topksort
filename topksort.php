@@ -45,7 +45,7 @@ function topksort(&$array, $k = 0, $comparator = null) {
   }
   for($i = $k; $i < count($array); ++$i) {
     if($comparator($array[0], $array[$i]) > 0) {
-      $swap($array, $i, 0);
+      $array[0] = $array[$i];
       $topkheapifydown($array, $k);
     }
   }
