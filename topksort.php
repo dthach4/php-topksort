@@ -17,12 +17,12 @@ function topksort(&$array, $k = 0, $comparator = null) {
       $done = true;
       $maxIdx = $i;
       if(2*($i+1)-1 < $k) {
-        if($comparator($array[2*($i+1)-1], $array[$maxIdx]) > 0) {
-          $maxIdx = 2*($i+1)-1;
+        if($comparator($array[2*$i+1], $array[$maxIdx]) > 0) {
+          $maxIdx = 2*$i+1;
         }
         if(2*($i+1) < $k) {
-          if($comparator($array[2*($i+1)], $array[$maxIdx]) > 0) {
-            $maxIdx = 2*($i+1);
+          if($comparator($array[2*$i+2)], $array[$maxIdx]) > 0) {
+            $maxIdx = 2*$i+2;
           }
         }
       }
